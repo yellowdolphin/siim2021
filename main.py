@@ -32,6 +32,12 @@ warnings.filterwarnings('ignore')
 if __name__ == '__main__':
     print('[ √ ] Landmark!')
     args, cfg = parse_args()
+    # cfg.basic.mode=train, i=aux_bce_agg_exp_rot_30_20_v2l.yaml, j=aux_bce/agg_exp_rot_30_20_v2l.yaml, model.name='v2l_aux'
+    # cfg.basic.mode=train, i=aux_bce_agg_exp_rot_30_20_b5.yaml,  j=aux_bce/agg_exp_rot_30_20_b5.yaml
+    # cfg = get_config(args.j)
+    # cfg.basic.id=args.i
+    # experiment.run_fold: -1
+    # experiment.fold: 5 (default)
 
     result_path = prepare_for_result(cfg)
     writer = SummaryWriter(log_dir=result_path)
