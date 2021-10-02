@@ -372,6 +372,7 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
 
         self.img_files = [x.strip().split(' ')[0] for x in lines]
         self.label_files = [x.strip().split(' ')[1] for x in lines]
+        print("paths from", path)
         print("first image:", self.img_files[0])
         print("first_label:", self.label_files[0])
 
