@@ -56,5 +56,5 @@ convert_label(df, is_write_label=True)
 for fold_id in [0,1,2,3,4]:
     train_df = df[df['fold'] != fold_id].reset_index()
     val_df = df[df['fold'] == fold_id].reset_index()
-    convert_label(train_df, out_txt=f'data/train_f{fold_id}_s42_cls{num_cls}.txt')
-    convert_label(val_df, out_txt=f'data/val_f{fold_id}_s42_cls{num_cls}.txt')
+    convert_label(train_df, out_folder='../labels', out_txt=f'data/train_f{fold_id}_s42_cls{num_cls}.txt')
+    convert_label(val_df, out_folder='../labels', out_txt=f'data/val_f{fold_id}_s42_cls{num_cls}.txt')
