@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np 
 from tqdm import tqdm 
 
-curr_dir = os.getcwd()
+#curr_dir = os.getcwd()
 #image_dir = '../pipeline1/data/png512'  # original copies uses xhulu's 512x512 png dataset
 image_dir = '/kaggle/input/siim-covid19-resized-to-512px-png'
 csv_path = '../pipeline1/data/train_split_seed42.csv'
@@ -18,8 +18,10 @@ def convert_label(df, out_folder = 'labels', out_txt='train.txt', is_write_label
     with open(out_txt, 'w') as f1:
         for i in tqdm(range(df.shape[0])):
             row = df.loc[i]
-            path = f'{curr_dir}/{image_dir}/train/{row.id[:-6]}.png'
-            label_path = f'{curr_dir}/{out_folder}{num_cls}/{row.id[:-6]}.txt'
+            #path = f'{curr_dir}/{image_dir}/train/{row.id[:-6]}.png'
+            path = f'{image_dir}/train/{row.id[:-6]}.png'
+            #label_path = f'{curr_dir}/{out_folder}{num_cls}/{row.id[:-6]}.txt'
+            label_path = f'{out_folder}{num_cls}/{row.id[:-6]}.txt'
 
             f1.write(f'{path} {label_path}\n')
             if is_write_label:
