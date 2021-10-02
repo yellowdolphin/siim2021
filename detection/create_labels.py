@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 #curr_dir = os.getcwd()
 #image_dir = '../pipeline1/data/png512'  # original copies uses xhulu's 512x512 png dataset
-image_dir = '/kaggle/input/siim-covid19-resized-to-512px-png'
+image_dir = '/kaggle/input/siim-covid19-resized-to-512px-png/train'
 csv_path = '../pipeline1/data/train_split_seed42.csv'
 num_cls = 1
 
