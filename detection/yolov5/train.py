@@ -433,7 +433,7 @@ def train(hyp, opt, device, tb_writer=None):
                 hm_loss = segLoss(seg_out, hms)
                 # print(hm_loss)
 
-                ratio = sigmoid_rampup(epoch, 40)
+                ratio = sigmoid_rampup(epoch, int(40 * epochs / 50))
                 ratio = 10*(1-ratio)
 
                 loss = 1*loss + ratio*hm_loss + 0.5*logit_loss
