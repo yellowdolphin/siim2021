@@ -17,7 +17,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--is_val', default=1, help='is_eval')
 parser.add_argument('--input_path', default='../../data/png512/test/*.png', help='is_wbf2')
 parser.add_argument('--output_path', default='outputs/test/', help='is_wbf2')
-parser.add_argument('--weight_path', default='0', help='is_wbf2')
+#parser.add_argument('--weight_path', '--weights', nargs='+', type=str, default='yolov5s.pt', help='model.pt path(s)')
+parser.add_argument('--weights', nargs='+', type=str, default='yolov5s.pt', help='model.pt path(s)')
 parser.add_argument('--hflip', default=0, help='is_wbf2')
 parser.add_argument('--input_size', default=384, help='is_wbf2')
 
@@ -188,7 +189,7 @@ if __name__ =="__main__":
     print(len(weights))
     """
 
-    weights = args.weight_path
+    weights = args.weights
     print(f"Inference on {len(weights)} checkpoints:")
 
     input_size = int(args.input_size)
