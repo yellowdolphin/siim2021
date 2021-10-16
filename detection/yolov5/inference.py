@@ -196,10 +196,6 @@ if __name__ =="__main__":
     is_hflip = int(args.hflip)
 
 
-    for w in tqdm(weights):
-        assert os.path.isfile(w), f'{w} does not exist!'
-        print(f"    {w}")
-
     if is_val:
         num_classes = 1
         outdir = 'outputs/val/'
@@ -220,18 +216,21 @@ if __name__ =="__main__":
     models = []
     outnames = []
     for weight_path in weights:
+        assert os.path.isfile(weight_path), f'{weight_path} does not exist!'
+        print(f"    {weight_path}")
         model = torch.load(weight_path, map_location=device)['model'].float()  # load to FP32
         model.to(device).eval()
         models.append(model)
 
         outname = outdir +  weight_path.replace('/', '_').replace('.pt', f'_hflip{is_hflip}.txt').replace('..', '')
         outnames.append(outname)
+        print(f"    -> {outname}")
         with open(outname, 'w') as f:
             pass
 
-    print(is_hflip, outnames)
-    bar = tqdm(test_loader)
-    for batch_idx, batch_data in enumerate(bar):
+    #print(is_hflip, outnames)
+    #bar = tqdm(test_loader)
+    for batch_idx, batch_data in test_loader:
         images, paths = batch_data 
         images = images.to(device)
 
