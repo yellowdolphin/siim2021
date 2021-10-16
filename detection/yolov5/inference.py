@@ -57,6 +57,7 @@ class TestDataset(Dataset):
 if __name__ =="__main__":
     is_val = int(args.is_val)
 
+    """Original implementation has weights hardcoded:
     weights = [
             # # best
             # # #s
@@ -185,6 +186,10 @@ if __name__ =="__main__":
 
     # weights = [x for x in weights if '_f4' in x]
     print(len(weights))
+    """
+
+    weights = args.weight_path
+    print(f"Inference on {len(weights)} checkpoints:")
 
     input_size = int(args.input_size)
     is_hflip = int(args.hflip)
@@ -192,6 +197,7 @@ if __name__ =="__main__":
 
     for w in tqdm(weights):
         assert os.path.isfile(w), f'{w} does not exist!'
+        print(f"    {w}")
 
     if is_val:
         num_classes = 1
