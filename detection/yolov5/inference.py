@@ -228,9 +228,7 @@ if __name__ =="__main__":
         with open(outname, 'w') as f:
             pass
 
-    #print(is_hflip, outnames)
-    #bar = tqdm(test_loader)
-    for batch_idx, batch_data in test_loader:
+    for batch_idx, batch_data in enumerate(test_loader):
         images, paths = batch_data 
         images = images.to(device)
 
