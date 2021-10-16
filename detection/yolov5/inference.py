@@ -222,7 +222,6 @@ if __name__ =="__main__":
         with open(outname, 'w') as f:
             pass
 
-    original_size = 512
     print(is_hflip, outnames)
     bar = tqdm(test_loader)
     for batch_idx, batch_data in enumerate(bar):
@@ -247,10 +246,10 @@ if __name__ =="__main__":
                         name = path.split('/')[-1]
                         if det is not None and len(det):
                             # Rescale boxes from img_size to im0 size
-                            det[:, :4] = det[:, :4]*original_size/input_size #scale_coords(images[0].shape[2:], det[:, :4], (512,512,3)).round()
+                            #det[:, :4] = det[:, :4] #scale_coords(images[0].shape[2:], det[:, :4], (512,512,3)).round()
                             for *xyxy, conf, cls in det:
                                 if is_hflip:
-                                    f.write(f'{name} {cls} {original_size-float(xyxy[2])} {float(xyxy[1])} {original_size - float(xyxy[0])} {float(xyxy[3])} {conf}\n')
+                                    f.write(f'{name} {cls} {input_size-float(xyxy[2])} {float(xyxy[1])} {input_size - float(xyxy[0])} {float(xyxy[3])} {conf}\n')
                                 else:
                                     f.write(f'{name} {cls} {float(xyxy[0])} {float(xyxy[1])} {float(xyxy[2])} {float(xyxy[3])} {conf}\n')
 
