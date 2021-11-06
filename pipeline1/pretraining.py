@@ -400,7 +400,7 @@ if __name__ == "__main__":
         print("[ √ ] Using segmentation")
         cfg.use_seg = True
 
-    device = "cuda"
+    device = torch.device('cuda', 0) if torch.cuda.is_available() else torch.device('cpu')
 
     copyfile(os.path.basename(__file__), os.path.join(cfg.out_dir, os.path.basename(__file__)))
 

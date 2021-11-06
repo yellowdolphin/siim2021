@@ -423,11 +423,11 @@ def train_func(model, train_loader, scheduler, device, epoch, tr_it):
             break
 
     if cfg.loss in ['roc']:
-        last_whole_y_t = torch.tensor(whole_y_t).cuda()
-        last_whole_y_pred = torch.tensor(whole_y_pred).cuda()
+        last_whole_y_t = torch.tensor(whole_y_t).to(device)
+        last_whole_y_pred = torch.tensor(whole_y_pred).to(device)
         roc_criterion.update(last_whole_y_t, last_whole_y_pred, epoch)
         if cfg.model in ['model_2_1', 'model_4_1', 'model_4_2', 'model_7']:
-            last_whole_y_pred1 = torch.tensor(whole_y_pred1).cuda()
+            last_whole_y_pred1 = torch.tensor(whole_y_pred1).to(device)
             roc_criterion1.update(last_whole_y_t, last_whole_y_pred1, epoch)
 
     loss_train = np.mean(losses)
@@ -650,7 +650,7 @@ if __name__ == "__main__":
         print("[ √ ] Using segmentation")
         cfg.use_seg = True
 
-    device = "cuda"
+    device = torch.device('cuda', 0) if torch.cuda.is_available() else torch.device('cpu')
 
     if cfg.mode in ['train', 'val', 'predict']:
         oofs = []
@@ -675,7 +675,7 @@ if __name__ == "__main__":
                 if cfg.model in ['model_2']:
                     criterion = torch.nn.BCELoss()
                 else:
-                    # criterion = torch.nn.BCEWithLogitsLoss(pos_weight = torch.as_tensor([1,1,3,2,1], dtype=torch.float).cuda())
+                    # criterion = torch.nn.BCEWithLogitsLoss(pos_weight = torch.as_tensor([1,1,3,2,1], dtype=torch.float).to(device))
                     criterion = torch.nn.BCEWithLogitsLoss()
 
                 # ce_criterion = torch.nn.CrossEntropyLoss()
