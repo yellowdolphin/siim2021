@@ -37,7 +37,7 @@ filterwarnings("ignore")
 
 sys.path.append("models")
 
-SIIMModel = importlib.import_module(cfg["model"]).SIIMModel
+SIIMModel = importlib.import_module(cfg["model"]).SIIMModel   # model_1 or model_2_1
 
 def set_seed(seed=1234):
     random.seed(seed)
@@ -68,6 +68,7 @@ def logfile(message):
         logger.write(f'{message}\n')
 
 def get_optimizer(cfg, model):
+    "cfg.train_params.lr: [lr_body, lr_head] or lr"
     if isinstance(cfg["lr"], list):
         params = [
             {
@@ -207,6 +208,10 @@ def get_dataloader(cfg, fold_id):
         albumentations.Resize(cfg.input_size, cfg.input_size),
         # albumentations.Normalize()
     ])
+    print("train tfms:")
+    print(transforms_train)
+    print("valid tfms:")
+    print(transforms_valid)
 
     if cfg.stage > 0:
         df = pd.read_csv(f'{cfg.out_dir}/oofs{cfg.stage-1}.csv')
@@ -316,7 +321,7 @@ def train_func(model, train_loader, scheduler, device, epoch, tr_it):
             if cfg.use_seg:
                 e_images, e_targets, e_oof_targets, e_targets1, e_hms = e_batch_data
             else:
-                e_images, e_targets, e_oof_targets, e_targets1 = e_batch_data
+                e_images, e_targets, e_oof_targets, e_targets1 = e_batch_data   # e_oof_targets, e_targets1 not used!
 
             images = torch.cat([images, e_images], 0)
             targets = torch.cat([targets, e_targets], 0)
@@ -331,7 +336,7 @@ def train_func(model, train_loader, scheduler, device, epoch, tr_it):
 
 
         if cfg.model in ['model_2_1', 'model_2_2', 'model_7']:
-            prediction, prediction1 = predictions
+            prediction, prediction1 = predictions     # prediction1: aux head from block 5
         elif cfg.model in ['model_4_1', 'model_4_2']:
             prediction, prediction1, seg_out = predictions
         elif cfg.model in ['model_4']:
@@ -352,6 +357,9 @@ def train_func(model, train_loader, scheduler, device, epoch, tr_it):
             if cfg.model in ['model_2_1', 'model_2_2', 'model_4_1', 'model_4_2', 'model_7']:
                 # print(prediction.shape, prediction1.shape, targets.shape)
                 loss = 0.75*criterion(prediction, targets.to(device)) + 0.25*criterion(prediction1, targets.to(device))
+                #                                                                   why not targets1? --^
+                # I don't see the benefit of this aux head if loss is against same target.
+                # ResNets should not need this... do they???
             else:
                 loss = criterion(prediction, targets.to(device))
         elif cfg.loss in ['roc']:

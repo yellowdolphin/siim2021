@@ -68,7 +68,7 @@ class SIIMModel(nn.Module):
             self.model.classifier =  nn.Identity()
 
         elif "nfnet" in model_name or "regnet" in model_name: 
-            self.model.head = nn.Identity()
+            self.model.head = nn.Identity()    # replace pool, FC (see forward)
             n_features = self.model.final_conv.out_channels
         elif 'densenet' in model_name:
             self.model.global_pool = nn.Identity()
@@ -87,6 +87,7 @@ class SIIMModel(nn.Module):
 
     # @conditional_decorator(autocast(), mixed_precision)
     def forward(self, x):
+        # New head: self.pooling, flatten, self.dropout, self.fc
         bs = x.size(0)
         features = self.model(x)
         if 'resnetv2' in self.model_name:

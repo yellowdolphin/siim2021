@@ -153,8 +153,8 @@ class SIIMDataset(Dataset):
             img = cv2.resize(img, (512, 512))
 
         if self.cfg.use_ben:
-            img1=cv2.addWeighted ( img,4, cv2.GaussianBlur( img , (0,0) , 20) ,-4 ,150)
-            img1 = cv2.cvtColor(img1,cv2.COLOR_RGB2GRAY)
+            img1 = cv2.addWeighted(img, 4, cv2.GaussianBlur(img, (0,0), 20), -4, 150)
+            img1 = cv2.cvtColor(img1, cv2.COLOR_RGB2GRAY)
 
             img2 = cv2.equalizeHist(img[:,:,0])
             img[:,:,0] = img1
@@ -162,7 +162,7 @@ class SIIMDataset(Dataset):
 
         # img = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)
 
-        if self.gen_images:
+        if self.gen_images:  # only train, not valid
             if random.randint(0,2) == 1:
                 img = self.generate_images(img, row)
 
