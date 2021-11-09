@@ -92,6 +92,8 @@ def get_optimizer(cfg, model):
 
     if cfg["optimizer"] == "Adam":
         optimizer = torch.optim.Adam(params, lr=params[0]["lr"])
+    elif cfg["optimizer"] == "AdamW":
+        optimizer = torch.optim.AdamW(params, lr=params[0]["lr"], weight_decay=0.05)
     elif cfg["optimizer"] == "SGD":
         optimizer = torch.optim.SGD(params, lr=params[0]["lr"], momentum=0.9, nesterov=True,)
     elif cfg["optimizer"] == "ranger21":
