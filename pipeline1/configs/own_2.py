@@ -21,7 +21,7 @@ cfg = {
     "resume_training": False,
     "dropout": 0.6,
     "pool": "gem",
-    "batch_size": 32,
+    "batch_size": 24,
     "num_workers": 4,
     "optimizer": "AdamW",  # Adam, AdamW, SGD
     "lr": 5e-5,
@@ -35,7 +35,7 @@ cfg = {
     # "neptune_project": "nvnn/siim2021",
     "scheduler": "cosine", #linear  cosine
     "model": "model_1",
-    "epochs": 10,
+    "epochs": 12,
     "mode": "train",
     "loss": 'bce',
     "muliscale": 0,
