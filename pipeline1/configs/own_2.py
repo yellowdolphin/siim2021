@@ -23,7 +23,7 @@ cfg = {
     "pool": "gem",
     "batch_size": 32,
     "num_workers": 4,
-    "optimizer": "Adam",  # Adam, SGD
+    "optimizer": "AdamW",  # Adam, AdamW, SGD
     "lr": 5e-5,
     "mixed_precision": 0, 
     "distributed":0,
