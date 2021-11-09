@@ -10,7 +10,7 @@ cfg = {
     "image_dir": "/kaggle/input/siim-covid19-resized-to-512px-png",
     "train_csv_path": "data/train_split_seed42.csv",
     "input_size": 384,
-    "output_size": 5,
+    "output_size": 4,
     "use_seg":False,
     "out_dir": f"{outputdir}",
     "folds": [0, 1, 2, 3, 4],
