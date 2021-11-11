@@ -104,7 +104,7 @@ def get_optimizer(cfg, model):
 def get_scheduler(cfg, optimizer, total_steps):
     # print(total_steps)
     if cfg["scheduler"] == "steplr":
-        scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=40000, gamma=0.8)
+        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=400000, gamma=0.1)
     elif cfg["scheduler"] == "cosine":
         scheduler = get_cosine_schedule_with_warmup(
             optimizer,
@@ -120,7 +120,7 @@ def get_scheduler(cfg, optimizer, total_steps):
 
         # print("num_steps", (total_steps // cfg["batch_size"]))
     elif cfg["scheduler"] == "onecycle":
-        scheduler = optim.lr_scheduler.OneCycleLR(
+        scheduler = torch.optim.lr_scheduler.OneCycleLR(
             optimizer,
             max_lr=cfg["train_params"]["lr"],
             total_steps=total_steps // cfg["batch_size"] // 50,  # only go for 50 % of train
@@ -133,7 +133,7 @@ def get_scheduler(cfg, optimizer, total_steps):
             final_div_factor=1e5,
         )
     else:
-        scheduler = None
+        scheduler = None  # invalid, has no attr 'step'
 
     return scheduler
 
