@@ -740,6 +740,7 @@ if __name__ == "__main__":
                 else:
                     tr_it = None
 
+                print(list(model.state_dict().keys()))
                 print(model)
 
                 loss_min = 1e6
