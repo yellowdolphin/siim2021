@@ -743,7 +743,6 @@ if __name__ == "__main__":
                 print("FC stats:")
                 print("weight:", model.state_dict()['fc.weight'].mean(), model.state_dict()['fc.weight'].std())
                 print("bias:  ", model.state_dict()['fc.bias'].mean(), model.state_dict()['fc.bias'].std())
-                print(model)
 
                 loss_min = 1e6
                 map_score_max = 0
