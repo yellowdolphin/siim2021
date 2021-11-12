@@ -740,6 +740,8 @@ if __name__ == "__main__":
                 else:
                     tr_it = None
 
+                print(model)
+
                 loss_min = 1e6
                 map_score_max = 0
                 best_score = 0
