@@ -59,7 +59,8 @@ def sigmoid_rampup(current, rampup_length=15):
         return 0.9*float(np.exp(-5.0 * phase * phase))
 
 def get_model(cfg):
-    model = SIIMModel(model_name=cfg.model_architecture, pretrained=False, pool=cfg.pool, out_dim=cfg.output_size, dropout = cfg.dropout)
+    model = SIIMModel(model_name=cfg.model_architecture, pretrained=(not cfg.weight_file), 
+                      pool=cfg.pool, out_dim=cfg.output_size, dropout = cfg.dropout)
     return model
 
 def logfile(message):
