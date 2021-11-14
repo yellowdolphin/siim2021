@@ -474,6 +474,8 @@ def valid_func(model, valid_loader):
             else:
                 logits = predictions
 
+            if logits.shape[0] != sz: print(f"logits: {logits.shape}, images: {images.shape}")  # debug
+
             if cfg.loss == 'ce':
                 # loss = ce_criterion(logits, targets1.to(device)) 
                 if cfg.model in ['model_2_1', 'model_2_2', 'model_4_1', 'model_4_2', 'model_7']:
