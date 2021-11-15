@@ -312,7 +312,6 @@ def train_func(model, train_loader, scheduler, device, epoch, tr_it):
             images, targets, oof_targets, targets1, hms = batch_data
         else:
             images, targets, oof_targets, targets1 = batch_data
-        print("image stats:", images.min(), images.max())  # debug
 
         if cfg.use_edata:
             try:
