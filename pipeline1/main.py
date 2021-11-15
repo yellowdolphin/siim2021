@@ -312,6 +312,7 @@ def train_func(model, train_loader, scheduler, device, epoch, tr_it):
             images, targets, oof_targets, targets1, hms = batch_data
         else:
             images, targets, oof_targets, targets1 = batch_data
+        print("image stats:", images.min(), images.max())  # debug
 
         if cfg.use_edata:
             try:
@@ -473,8 +474,6 @@ def valid_func(model, valid_loader):
                 logits, seg_out = predictions
             else:
                 logits = predictions
-
-            if logits.shape[0] != sz: print(f"logits: {logits.shape}, images: {images.shape}")  # debug
 
             if cfg.loss == 'ce':
                 # loss = ce_criterion(logits, targets1.to(device)) 
