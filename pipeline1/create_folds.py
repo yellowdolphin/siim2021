@@ -6,8 +6,8 @@ seed = 42
 
 data_dir = 'data/'
 
-df_study = pd.read_csv(f'{data_dir}/train_study_level.csv')
-df_image = pd.read_csv(f'{data_dir}/train_image_level.csv')
+df_study = pd.read_csv(f'{data_dir}/train_study_level.csv')  # 6054
+df_image = pd.read_csv(f'{data_dir}/train_image_level.csv')  # 6334
 
 df_study['targets'] = df_study['Negative for Pneumonia']*1 + df_study['Typical Appearance']*2 + df_study['Indeterminate Appearance']*3  + df_study['Atypical Appearance']*4
 df_study['StudyInstanceUID'] = df_study['id'].apply(lambda x: x.split('_')[0])
@@ -34,15 +34,15 @@ for col in merge_cols:
 	df_image[col] = df_image['StudyInstanceUID'].apply(lambda x: study_dict[x][col])
 
 
-df_meta = pd.read_csv('data/meta.csv')
-df_meta = df_meta[df_meta.split=='train']
+df_meta = pd.read_csv('data/meta.csv')     # 6334 train + 1263 test image dims
+df_meta = df_meta[df_meta.split=='train']  # 6334
 df_image['image_id'] = df_image['id'].apply(lambda x: x.split('_')[0])
 df_image = pd.merge(df_image, df_meta, on="image_id")
 
 df_image['has_box'] = df_image['label'].apply(lambda x: 1*('none' in x))
 print(df_image['has_box'].value_counts())
 
-#remove unlabel images
+#remove unlabel images: from multi-image studies, when there are any bboxes, drop all images w/o bbox
 study_ids = df_image.study_id.unique()
 drop_ids = []
 for study_id in tqdm(study_ids):

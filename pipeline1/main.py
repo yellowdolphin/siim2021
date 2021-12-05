@@ -628,7 +628,7 @@ def test_func(models, valid_loader):
                     probs += proba
 
             probs /= len(models)
-            pred_probs.append(proba)
+            pred_probs.append(probs)
 
             if batch_idx>30 and cfg.debug:
                 break
